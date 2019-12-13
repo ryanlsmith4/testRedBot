@@ -14,16 +14,14 @@ const client = new Snoowrap({
   password: process.env.PASSWORD,
 });
 
-
 const comments = new CommentStream(client, {
   subreddit: 'testingground4bots',
   limit: 10,
-  pollTime: 10000
+  pollTime: 10000,
 });
 
 comments.on('item', (item) => {
-  if(item.created_utc < BOT_START) return;
-
-
+  console.log('HERE');
+  if(item.created_utc < Math.floor(BOT_START)) return; 
   console.log(item);
 });
