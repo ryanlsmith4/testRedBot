@@ -8,7 +8,7 @@ const BOT_START = Date.now() / 1000;
 const Snoowrap =  require('snoowrap');
 
 const { CommentStream } = require('snoostorm');
-// let COUNT = 0;
+
 const reply = (comment) => {
 	const lowCom =  comment.toLowerCase();
 	if(lowCom.includes('prison mike')) {
@@ -43,8 +43,8 @@ comments.on('item', async (item) => {
 
 	let COUNT = dryComments.length;
 
-	console.log(COUNT);
-	// https://giphy.com/gifs/aZeFIjI9hNcJ2/html5
+  console.log(COUNT);
+  
 	const text = `https://media.giphy.com/media/aZeFIjI9hNcJ2/giphy.gif  <br /> I am a bot BleepBoop this bot has been summoned ${COUNT} times`;
 	if(item.created_utc < Math.floor(BOT_START)) return; 
 	n += 1
