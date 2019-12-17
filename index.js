@@ -24,21 +24,9 @@ const client = new Snoowrap({
 	refreshToken: process.env.REFRESH_TOKEN,
 });
 
-client.config({ continueAfterRatelimitError: true });
-
 const user = client.getUser(process.env.USERNAME);
 
-let COUNT;
-let getCount = (count) => {
-	COUNT = count;
-};
-
-let updateCount = () => {
-	user.getComments().then((comments) => {
-		let count = comments.length;
-		getCount(count);
-	});
-};
+client.config({ continueAfterRatelimitError: true });
 
 const comments = new CommentStream(client, {
 	subreddit:'all',
@@ -52,13 +40,14 @@ comments.on('error', (e) => {
 });
 
 let n = 0;
-comments.on('item', (item) => {
+comments.on('item', async (item) => {
 	if(item.created_utc < Math.floor(BOT_START)) return;
 	n += 1;
 	console.log(`listening for comments ${n}`);
 	if(reply(item.body)){
-		updateCount();
-		let text = `https://media.giphy.com/media/aZeFIjI9hNcJ2/giphy.gif  I am a bot BleepBoop this bot has been summoned ${COUNT} times`;
+		const comments = await user.getComments();
+		// updateCount();
+		let text = `https://media.giphy.com/media/aZeFIjI9hNcJ2/giphy.gif  I am a bot BleepBoop this bot has been summoned ${comments.length} times`;
 		// console.log(`here is the count: ${COUNT}`);
 		item.reply(text);
 	}
