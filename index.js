@@ -48,14 +48,14 @@ comments.on('error', (e) => {
 
 const fileCount = fs.readFileSync('count.txt', 'utf8');
 
-let n = 0;
+// let n = 0;
 
 let count = Number(fileCount);
 
 comments.on('item', async (item) => {
 	if(item.created_utc < BOT_START) return;
 	n += 1;
-	console.log(`listening for comments ${n}`);
+	// console.log(`listening for comments ${n}`);
 	if(reply(item.body)){
 		count += 1;
 		await save(count, fs);
