@@ -54,7 +54,7 @@ let count = Number(fileCount);
 
 comments.on('item', async (item) => {
 	if(item.created_utc < BOT_START) return;
-	n += 1;
+	// n += 1;
 	// console.log(`listening for comments ${n}`);
 	if(reply(item.body)){
 		count += 1;
