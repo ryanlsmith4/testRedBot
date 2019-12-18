@@ -5,6 +5,8 @@ require('dotenv').config();
 
 const BOT_START = Date.now() / 1000;
 
+const fs = require('fs');
+
 const Snoowrap =  require('snoowrap');
 
 const { CommentStream } = require('snoostorm');
@@ -17,6 +19,13 @@ const reply = (comment) => {
 	return false;
 };
 
+const save = async(count, fs) => {
+	await fs.writeFile('count.txt', count, (err) => {
+		if(err) throw err;
+		console.log('Saved Count', count);
+	});
+};
+
 const client = new Snoowrap({
 	userAgent: 'testBot: v1.0.0 (by /u/Dry_Relation)',
 	clientId: process.env.CLIENTID,
@@ -24,14 +33,12 @@ const client = new Snoowrap({
 	refreshToken: process.env.REFRESH_TOKEN,
 });
 
-const user = client.getUser(process.env.USERNAME);
-
 client.config({ continueAfterRatelimitError: true });
 
 const comments = new CommentStream(client, {
 	subreddit:'all',
-	pollTime: 2000,
-	limit: 1000,
+	pollTime: 1000,
+	limit: 100,
 });
 
 comments.on('error', (e) => {
@@ -39,16 +46,22 @@ comments.on('error', (e) => {
 	console.log(e);
 });
 
+const fileCount = fs.readFileSync('count.txt', 'utf8');
+
 let n = 0;
+
+let count = Number(fileCount);
+
 comments.on('item', async (item) => {
-	if(item.created_utc < Math.floor(BOT_START)) return;
+	if(item.created_utc < BOT_START) return;
 	n += 1;
 	console.log(`listening for comments ${n}`);
 	if(reply(item.body)){
-		const comments = await user.getComments();
-		// updateCount();
-		let text = `https://media.giphy.com/media/aZeFIjI9hNcJ2/giphy.gif  I am a bot BleepBoop this bot has been summoned ${comments.length} times`;
-		// console.log(`here is the count: ${COUNT}`);
-		item.reply(text);
+		count += 1;
+		await save(count, fs);
+		let text = `https://media.giphy.com/media/aZeFIjI9hNcJ2/giphy.gif &nbsp;
+    
+    I am a bot BleepBoop This bot has been summoned ${count} times`;
+		await item.reply(text);
 	}
 });

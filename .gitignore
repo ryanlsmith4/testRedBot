@@ -1,2 +1,4 @@
 .env
 node_modules
+count.txt
+.eslintrc.json
