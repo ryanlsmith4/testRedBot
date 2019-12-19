@@ -51,7 +51,7 @@ const fileCount = fs.readFileSync('count.txt', 'utf8');
 let count = Number(fileCount);
 console.log('STARTS OVER???????')
 comments.on('item', async (item) => {
-  console.log(BOT_START);
+  console.log(Date.now() / 1000);
 	if(item.created_utc < BOT_START) return;
 	if(reply(item.body)){
 		await new Promise(r => setTimeout(r, 2000));
