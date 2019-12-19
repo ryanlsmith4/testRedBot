@@ -49,7 +49,7 @@ comments.on('error', (e) => {
 const fileCount = fs.readFileSync('count.txt', 'utf8');
 
 let count = Number(fileCount);
-
+console.log('STARTS OVER???????')
 comments.on('item', async (item) => {
   console.log(BOT_START);
 	if(item.created_utc < BOT_START) return;
