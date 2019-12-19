@@ -37,7 +37,7 @@ client.config({ continueAfterRatelimitError: true });
 
 const comments = new CommentStream(client, {
 	subreddit:'all',
-	pollTime: 1000,
+	pollTime: 2000,
 	limit: 100,
 });
 
