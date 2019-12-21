@@ -16,9 +16,9 @@ const bots = [];
 const reply = (comment) => {
 	const lowCom =  comment.toLowerCase();
 	if(lowCom.includes('bot')) {
-      console.log('Bot summoned...');
-    commentsRn += 1;
-    // console.log(bots)
+		console.log('Bot summoned...');
+		commentsRn += 1;
+		// console.log(bots)
 		return true;
 	}
 	return false;
@@ -57,20 +57,20 @@ comments.on('error', (e) => {
 console.log('Listening for comments');
 let commentsRn = 0;
 comments.on('item', async (item) => {
-  // console.log(item.author.name)
+	// console.log(item.author.name)
   
 	// if(item){
-    // commentsRn += 1;
-		// console.log(item.body, commentsRn);
-		if(reply(item.body)){
-      // console.log(bots)
+	// commentsRn += 1;
+	// console.log(item.body, commentsRn);
+	if(reply(item.body)){
+		// console.log(bots)
 
-      if(item.author.name == 'thegunsmith28'){
-        console.log(bots)
-        bots.push(item.body, commentsRn);
-        console.log(item.author.name, commentsRn)
-      }
+		if(item.author.name == 'thegunsmith28'){
+			console.log(bots)
+			bots.push(item.body, commentsRn);
+			console.log(item.author.name, commentsRn)
 		}
+	}
 	// }
  
   
