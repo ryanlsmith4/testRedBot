@@ -14,6 +14,7 @@ const { CommentStream } = require('snoostorm');
 const reply = (comment) => {
 	const lowCom =  comment.toLowerCase();
 	if(lowCom.includes('prison mike')) {
+		console.log('Bot summoned...');
 		return true;
 	}
 	return false;
@@ -49,14 +50,13 @@ comments.on('error', (e) => {
 const fileCount = fs.readFileSync('count.txt', 'utf8');
 
 let count = Number(fileCount);
-
+console.log('Listening for comments');
 comments.on('item', async (item) => {
 	// Avoid hitting rate limit by setting timeout.
 	await new Promise(r => {
 		setTimeout(r, 1000);
 	});
   
-
 	if(item.created_utc < BOT_START) return;
   
 	if(reply(item.body)){
