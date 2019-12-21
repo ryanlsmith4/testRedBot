@@ -53,7 +53,6 @@ let count = Number(fileCount);
 comments.on('item', async (item) => {
 	// Avoid hitting rate limit by setting timeout.
 	await new Promise(r => {
-		console.log(Date.now()/1000);
 		setTimeout(r, 1000);
 	});
   
