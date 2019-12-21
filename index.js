@@ -16,7 +16,9 @@ const bots = [];
 const reply = (comment) => {
 	const lowCom =  comment.toLowerCase();
 	if(lowCom.includes('bot')) {
+      console.log('Bot summoned...');
     commentsRn += 1;
+    // console.log(bots)
 		return true;
 	}
 	return false;
@@ -40,8 +42,8 @@ client.config({ continueAfterRatelimitError: true });
 
 const comments = new CommentStream(client, {
 	subreddit:'all',
-	pollTime: 1000,
-	// limit: 100,
+	pollTime: 10000,
+	limit: 1000,
 });
 
 comments.on('error', (e) => {
@@ -55,15 +57,21 @@ comments.on('error', (e) => {
 console.log('Listening for comments');
 let commentsRn = 0;
 comments.on('item', async (item) => {
-	if(item){
+  // console.log(item.author.name)
+  
+	// if(item){
     // commentsRn += 1;
-			console.log('Bot summoned...');
 		// console.log(item.body, commentsRn);
 		if(reply(item.body)){
-      bots.push(item.body, commentsRn);
-      console.log(bots)
+      // console.log(bots)
+
+      if(item.author.name == 'thegunsmith28'){
+        console.log(bots)
+        bots.push(item.body, commentsRn);
+        console.log(item.author.name, commentsRn)
+      }
 		}
-	}
+	// }
  
   
 	// Avoid hitting rate limit by setting timeout.
