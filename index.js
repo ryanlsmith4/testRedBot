@@ -22,7 +22,7 @@ const reply = (comment) => {
 const save = async(count, fs) => {
 	await fs.writeFile('count.txt', count, (err) => {
 		if(err) throw err;
-		console.log('Saved Count', count);
+		console.log('Saved Count ', count);
 	});
 };
 
@@ -37,7 +37,7 @@ client.config({ continueAfterRatelimitError: true });
 
 const comments = new CommentStream(client, {
 	subreddit:'all',
-	pollTime: 2000,
+	pollTime: 1000,
 	limit: 100,
 });
 
@@ -49,17 +49,25 @@ comments.on('error', (e) => {
 const fileCount = fs.readFileSync('count.txt', 'utf8');
 
 let count = Number(fileCount);
-console.log('STARTS OVER???????')
+
 comments.on('item', async (item) => {
-  console.log(Date.now() / 1000);
+	// Avoid hitting rate limit by setting timeout.
+	await new Promise(r => {
+		console.log(Date.now()/1000);
+		setTimeout(r, 1000);
+	});
+  
+
 	if(item.created_utc < BOT_START) return;
+  
 	if(reply(item.body)){
-		await new Promise(r => setTimeout(r, 2000));
 		count += 1;
 		await save(count, fs);
 		let text = `https://media.giphy.com/media/aZeFIjI9hNcJ2/giphy.gif &nbsp;
     
-    I am a bot BleepBoop This bot has been summoned ${count} times`;
+    I am a bot BleepBoop This bot has been summoned ${count} times 
+
+   [link to GitHub](https://github.com/ryanlsmith4/testRedBot)`;
 		await item.reply(text);
 	}
 });
