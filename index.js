@@ -11,21 +11,31 @@ const Snoowrap =  require('snoowrap');
 
 const { CommentStream } = require('snoostorm');
 
-const reply = (comment) => {
-	const lowCom =  comment.toLowerCase();
-	if(lowCom.includes('prison mike')) {
-		console.log('Bot summoned...');
-		return true;
-	}
-	return false;
-};
+const fileCount = fs.readFileSync('count.txt', 'utf8');
 
-const save = async(count, fs) => {
-	await fs.writeFile('count.txt', count, (err) => {
-		if(err) throw err;
-		console.log('Saved Count ', count);
-	});
-};
+class RedBot {
+	constructor(listenReplies){
+		this.listenReplies = listenReplies
+	}
+
+	 reply = (comment) => {
+		const lowCom =  comment.toLowerCase();
+		if(lowCom.includes('prison mike')) {
+			console.log('Bot summoned...');
+			return true;
+		}
+		return false;
+	};
+
+	 save = async(count, fs) => {
+		await fs.writeFile('count.txt', count, (err) => {
+			if(err) throw err;
+			console.log('Saved Count ', count);
+		});
+	};
+}
+
+const reddit = new RedBot();
 
 const client = new Snoowrap({
 	userAgent: 'testBot: v1.0.0 (by /u/Dry_Relation)',
@@ -47,7 +57,7 @@ comments.on('error', (e) => {
 	console.log(e);
 });
 
-const fileCount = fs.readFileSync('count.txt', 'utf8');
+
 
 let count = Number(fileCount);
 console.log('Listening for comments');
@@ -59,9 +69,9 @@ comments.on('item', async (item) => {
   
 	if(item.created_utc < BOT_START) return;
   
-	if(reply(item.body)){
+	if(reddit.reply(item.body)){
 		count += 1;
-		await save(count, fs);
+		await reddit.save(count, fs);
 		let text = `https://media.giphy.com/media/aZeFIjI9hNcJ2/giphy.gif &nbsp;
     
     I am a bot BleepBoop This bot has been summoned ${count} times 
