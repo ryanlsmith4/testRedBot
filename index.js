@@ -7,50 +7,29 @@ const BOT_START = Date.now() / 1000;
 
 const fs = require('fs');
 
-const Snoowrap =  require('snoowrap');
+// const Snoowrap =  require('snoowrap');
 
-const { CommentStream } = require('snoostorm');
+// const { CommentStream } = require('snoostorm');
 
 const fileCount = fs.readFileSync('count.txt', 'utf8');
-
-class RedBot {
-	constructor(listenReplies){
-		this.listenReplies = listenReplies
-	}
-
-	 reply = (comment) => {
-		const lowCom =  comment.toLowerCase();
-		if(lowCom.includes('prison mike')) {
-			console.log('Bot summoned...');
-			return true;
-		}
-		return false;
-	};
-
-	 save = async(count, fs) => {
-		await fs.writeFile('count.txt', count, (err) => {
-			if(err) throw err;
-			console.log('Saved Count ', count);
-		});
-	};
-}
+const reddit = require('./redditBot');
 
 const reddit = new RedBot();
 
-const client = new Snoowrap({
-	userAgent: 'testBot: v1.0.0 (by /u/Dry_Relation)',
-	clientId: process.env.CLIENTID,
-	clientSecret: process.env.CLIENTSECRET,
-	refreshToken: process.env.REFRESH_TOKEN,
-});
+// const client = new Snoowrap({
+// 	userAgent: 'testBot: v1.0.0 (by /u/Dry_Relation)',
+// 	clientId: process.env.CLIENTID,
+// 	clientSecret: process.env.CLIENTSECRET,
+// 	refreshToken: process.env.REFRESH_TOKEN,
+// });
 
 client.config({ continueAfterRatelimitError: true });
 
-const comments = new CommentStream(client, {
-	subreddit:'all',
-	pollTime: 1000,
-	limit: 100,
-});
+// const comments = new CommentStream(client, {
+// 	subreddit:'all',
+// 	pollTime: 1000,
+// 	limit: 100,
+// });
 
 comments.on('error', (e) => {
 	console.log('Something went wrong');
