@@ -29,13 +29,17 @@ class RedBot {
          let string = removeWhiteSpace.toLowerCase();
          for(let i = 0; i <= replyList.length; i++){
              if(string.includes(replyList[i])){
-                 this.count++;
-                 let countText = replies[i].replace('count', this.count);
-                await item.reply(countText);
-                 this.save();
+                 try{
+                    this.count++;
+                    let countText = replies[i].replace('count', this.count);
+                    await item.reply(countText);
+                    this.save();
+                 } catch (e){
+                    console.log(e)
+                 }
              } 
         }
-        return false
+        // return false
     };
 	 save = () => {
 		fs.writeFile('count.txt', this.count, (err) => {
