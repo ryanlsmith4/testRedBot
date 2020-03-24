@@ -17,4 +17,8 @@
 > Experiement with reddit API?
 and snoostorm, There is infinite possibilities! 
 
+# How to interact
+
+> There a few ways to interact with the bot. One of which is by commenting "prison mike" On a comment of your choice in the testingground4bots subreddit.
+> in the future we will be able to summon the bot from any subreddit by commenting as of right now this feature is limited because of the karma on this profile and therefore it exceeds rate limits at times.
 
