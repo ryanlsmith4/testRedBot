@@ -10,11 +10,27 @@ const listenReplies = {
     I am a bot BleepBoop This bot has been summoned count times 
 
    [link to GitHub](https://github.com/ryanlsmith4/testRedBot)`,
-   "Something else": "something else"
+
+   "fortytwo": `https://media3.giphy.com/media/jGWvmi09QLJM4/giphy.gif &nbsp;
+    
+   I am a bot BleepBoop This bot has been summoned count times 
+
+  [link to GitHub](https://github.com/ryanlsmith4/testRedBot)`,
+
+  "sorry":`https://giphy.com/gifs/year-getting-laESBDZWUubAc &nbsp;
+    
+  I am a bot BleepBoop This bot has been summoned count times 
+
+ [link to GitHub](https://github.com/ryanlsmith4/testRedBot)`,
+
+ "doggedabulletonthatone": `https://giphy.com/gifs/1yvoDVJQsTfHi &nbsp;
+    
+ I am a bot BleepBoop This bot has been summoned count times 
+
+[link to GitHub](https://github.com/ryanlsmith4/testRedBot)`
+
 }
-// let options =['testingground4bots'];
 const RedBot = require('./redditBot');
-// subreddit.push('testingground4bots')
 const reddit = new RedBot(listenReplies);
 reddit.client.config({  continueAfterRatelimitError: true });
 
