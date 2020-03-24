@@ -24,19 +24,15 @@ class RedBot {
         pollTime: 1000,
         limit: 100,
     },  console.log('Here-- ', this.subredditString));
-	 reply = (item, comment) => {
+	 reply = (item) => {
          let removeWhiteSpace = item.body.replace(/\s/g, '');
          let lowerItem = removeWhiteSpace.toLowerCase();
-         let toString = new String(lowerItem);
-         let string = toString.toString()
-        //  console.log(string)
-         for(let key in this.listenReplies){
-             if(string.includes(key)){
+         let string = new String(lowerItem);
+         for(let value in this.listenReplies){
+             if(string.includes(value)){
                  console.log('gottem')
                  this.count++;
-                 let countText = this.listenReplies[key].replace('count', this.count);
-                 console.log(string)
-                 console.log(countText)
+                 let countText = this.listenReplies[value].replace('count', this.count);
                  item.reply(countText);
                  this.save();
              }
