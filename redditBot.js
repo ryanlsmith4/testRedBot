@@ -7,9 +7,8 @@ require('dotenv').config();
 const fileRead = fs.readFileSync('count.txt', 'utf8')
 
 class RedBot {
-	constructor(listenReplies, subredditString){
+	constructor(listenReplies){
         this.listenReplies = listenReplies;
-        this.subredditString = subredditString;
         this.count = fileRead;
     }
     client = new Snoowrap({
@@ -20,7 +19,7 @@ class RedBot {
     });
     comments = new CommentStream(this.client, {
         subreddit:
-        //  this.subredditString,
+        //  this.subreddit,
         'testingground4bots',
         pollTime: 1000,
         limit: 100,
