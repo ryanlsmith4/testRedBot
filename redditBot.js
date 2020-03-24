@@ -23,21 +23,20 @@ class RedBot {
         limit: 100,
     },  console.log('Here-- ', this.subredditString));
 	 reply = (item) => {
+         let replyList = Object.keys(this.listenReplies);
+         console.log(replyList.length)
+         let replies = Object.values(this.listenReplies)
          let removeWhiteSpace = item.body.replace(/\s/g, '');
-         let lowerItem = removeWhiteSpace.toLowerCase();
-         let string = new String(lowerItem);
-         for(let value in this.listenReplies){
-             if(string.includes(value)){
-                 console.log('gottem')
+         let string = removeWhiteSpace.toLowerCase();
+         for(let i = 0; i <= replyList.length; i++){
+             if(string.includes(replyList[i])){
                  this.count++;
-                 let countText = this.listenReplies[value].replace('count', this.count);
-                 console.log(string)
-                 console.log(countText)
+                 let countText = replies[i].replace('count', this.count);
                  item.reply(countText);
                  this.save();
-             }
-         return false;
+             } 
         }
+        return false
     };
 	 save = () => {
 		fs.writeFile('count.txt', this.count, (err) => {

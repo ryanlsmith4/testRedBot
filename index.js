@@ -41,7 +41,6 @@ reddit.comments.on('error', (e) => {
 
 console.log('Listening for comments');
 reddit.comments.on('item', async (item) => {
-	console.log(item.body)
 	if(item.created_utc < BOT_START) return;
 	// evaluates to true || false
 	reddit.reply(item)
