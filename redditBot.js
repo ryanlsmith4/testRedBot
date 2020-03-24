@@ -19,8 +19,8 @@ class RedBot {
         subreddit:
         //  this.subreddit,
         'testingground4bots',
-        pollTime: 1000,
-        limit: 100,
+        pollTime: 2000,
+        limit: 50,
     },  console.log('Here-- ', this.subredditString));
 	 reply = async(item) => {
          let replyList = Object.keys(this.listenReplies);

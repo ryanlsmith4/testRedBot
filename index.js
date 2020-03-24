@@ -2,8 +2,6 @@
 'use strict';
 const BOT_START = Date.now() / 1000;
 
-// const Snoowrap =  require('snoowrap');
-// const { CommentStream } = require('snoostorm');
 const listenReplies = {
 	"prisonmike" : `https://media.giphy.com/media/aZeFIjI9hNcJ2/giphy.gif &nbsp;
     
@@ -39,7 +37,6 @@ reddit.comments.on('error', (e) => {
 	console.log(e);
 });
 
-console.log('Listening for comments');
 reddit.comments.on('item', async (item) => {
 	if(item.created_utc < BOT_START) return;
 	// evaluates to true || false
