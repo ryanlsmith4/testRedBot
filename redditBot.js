@@ -2,11 +2,12 @@ const Snoowrap =  require('snoowrap');
 const { CommentStream } = require('snoostorm');
 const fs = require('fs');
 require('dotenv').config();
+// add npm logger to track files 
 
 const fileRead = fs.readFileSync('count.txt', 'utf8')
 
 class RedBot {
-	constructor(listenReplies, values, subredditString){
+	constructor(listenReplies, subredditString){
         this.listenReplies = listenReplies;
         this.subredditString = subredditString;
         this.count = fileRead;
@@ -33,8 +34,10 @@ class RedBot {
                  console.log('gottem')
                  this.count++;
                  let countText = this.listenReplies[value].replace('count', this.count);
-                 item.reply(countText);
-                 this.save();
+                 console.log(string)
+                 console.log(countText)
+                //  item.reply(countText);
+                //  this.save();
              }
          return false;
         }

@@ -13,9 +13,7 @@ const listenReplies = {
    [link to GitHub](https://github.com/ryanlsmith4/testRedBot)`,
    "Something else": "something else"
 }
-
 const RedBot = require('./redditBot');
-// constructor(listenReplies, subreddit, count, fs){
 const reddit = new RedBot(listenReplies, 'testingground4bots');
 reddit.client.config({  continueAfterRatelimitError: true })
 
