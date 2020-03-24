@@ -22,9 +22,8 @@ class RedBot {
         pollTime: 1000,
         limit: 100,
     },  console.log('Here-- ', this.subredditString));
-	 reply = (item) => {
+	 reply = async(item) => {
          let replyList = Object.keys(this.listenReplies);
-         console.log(replyList.length)
          let replies = Object.values(this.listenReplies)
          let removeWhiteSpace = item.body.replace(/\s/g, '');
          let string = removeWhiteSpace.toLowerCase();
@@ -32,7 +31,7 @@ class RedBot {
              if(string.includes(replyList[i])){
                  this.count++;
                  let countText = replies[i].replace('count', this.count);
-                 item.reply(countText);
+                await item.reply(countText);
                  this.save();
              } 
         }
