@@ -1,61 +1,32 @@
 /* eslint-disable no-undef */
 'use strict';
-
-require('dotenv').config();
-
 const BOT_START = Date.now() / 1000;
-
-const fs = require('fs');
 
 // const Snoowrap =  require('snoowrap');
 
 // const { CommentStream } = require('snoostorm');
+const listenReplies = {
+	"prisonmike" : `https://media.giphy.com/media/aZeFIjI9hNcJ2/giphy.gif &nbsp;
+    
+    I am a bot BleepBoop This bot has been summoned count times 
 
-const fileCount = fs.readFileSync('count.txt', 'utf8');
-const reddit = require('./redditBot');
+   [link to GitHub](https://github.com/ryanlsmith4/testRedBot)`,
+   "Something else": "something else"
+}
 
-const reddit = new RedBot();
+const RedBot = require('./redditBot');
+// constructor(listenReplies, subreddit, count, fs){
+const reddit = new RedBot(listenReplies, 'testingground4bots');
+reddit.client.config({  continueAfterRatelimitError: true })
 
-// const client = new Snoowrap({
-// 	userAgent: 'testBot: v1.0.0 (by /u/Dry_Relation)',
-// 	clientId: process.env.CLIENTID,
-// 	clientSecret: process.env.CLIENTSECRET,
-// 	refreshToken: process.env.REFRESH_TOKEN,
-// });
-
-client.config({ continueAfterRatelimitError: true });
-
-// const comments = new CommentStream(client, {
-// 	subreddit:'all',
-// 	pollTime: 1000,
-// 	limit: 100,
-// });
-
-comments.on('error', (e) => {
+reddit.comments.on('error', (e) => {
 	console.log('Something went wrong');
 	console.log(e);
 });
 
-
-
-let count = Number(fileCount);
 console.log('Listening for comments');
-comments.on('item', async (item) => {
-	// Avoid hitting rate limit by setting timeout.
-	await new Promise(r => {
-		setTimeout(r, 1000);
-	});
-  
+reddit.comments.on('item', async (item) => {
 	if(item.created_utc < BOT_START) return;
-  
-	if(reddit.reply(item.body)){
-		count += 1;
-		await reddit.save(count, fs);
-		let text = `https://media.giphy.com/media/aZeFIjI9hNcJ2/giphy.gif &nbsp;
-    
-    I am a bot BleepBoop This bot has been summoned ${count} times 
-
-   [link to GitHub](https://github.com/ryanlsmith4/testRedBot)`;
-		await item.reply(text);
-	}
+	// evaluates to true || false
+	reddit.reply(item)
 });
